@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as JSZip from 'jszip';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'jwlmerge-pwa';
+
+  async uploadFile($event: any) {
+    const files = $event.target.files as FileList;
+    for (let i = 0; i < files.length; i++) {
+      const e = files[i];
+      this.handleFile(e);
+    }
+  }
+
+
+  async handleFile(file: File) {
+    const zip = await JSZip.loadAsync(file);
+    try {
+      zip.forEach((relativePath, zipEntry) => console.log(relativePath, zipEntry));
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 }
