@@ -20,7 +20,6 @@ export class BackupFileService {
     return new BackupFile(manifest, database);
   }
 
-
   async readManifest(zip: JSZip): Promise<Manifest> {
     const manifestString = await zip.file('manifest.json').async('string');
     // todo add checks for db version etc
@@ -31,5 +30,15 @@ export class BackupFileService {
     const dbFile = await await zip.file(path).async('uint8array');
     const dal = new DataAccessLayer();
     return await dal.readDatabase(dbFile);
+  }
+
+  merge(files: BackupFile[]) {
+    const fileNumber = 1;
+    for (const file of files) {
+      this.clean(file);
+    }
+  }
+
+  clean(file: BackupFile) {
   }
 }

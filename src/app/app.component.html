@@ -1,7 +1,9 @@
 
-<input hidden type="file" #uploader (change)="uploadFile($event)" accept=".jwlibary, .zip"/>
+<input hidden type="file" #uploader (change)="uploadFile($event)"  />
 <button (click)="uploader.click()">
   Upload
  </button>
+
+ <textarea [(ngModel)]="dings" class="ta"></textarea>
 
 <router-outlet></router-outlet>
