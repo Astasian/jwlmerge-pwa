@@ -1,11 +1,11 @@
 export interface Note {
-    noteId: number;
-    guid: string;
-    userMarkId: number | null;
-    locationId: number | null;
-    title: string;
-    content: string;
-    lastModified: string;
-    blockType: number;
-    blockIdentifier: number | null;
+    NoteId: number;
+    Guid: string;
+    UserMarkId: number | null;
+    LocationId: number | null;
+    Title: string;
+    Content: string;
+    LastModified: string;
+    BlockType: number;
+    BlockIdentifier: number | null;
 }

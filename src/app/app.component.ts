@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BackupFileService } from './services/backup-file.service';
+import { BackupFile } from './models/backup-file';
 
 
 @Component({
@@ -10,6 +11,9 @@ import { BackupFileService } from './services/backup-file.service';
 export class AppComponent {
 
   dings: string;
+
+  files: BackupFile[] = [];
+
   constructor(private backupFileService: BackupFileService) {
     console.log = (str) => {
       this.dings += "\n" + JSON.stringify(str).slice(1, 1000);
@@ -22,11 +26,16 @@ export class AppComponent {
       const e = files[i];
       try {
         const a = await this.backupFileService.load(e);
+        this.files.push(a);
         console.log(a);
       } catch (e) {
         console.log(e);
       }
     }
+  }
+
+  merge(){
+    this.backupFileService.merge(this.files);
   }
 }
 

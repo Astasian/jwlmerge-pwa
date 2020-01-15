@@ -8,7 +8,7 @@ import { Tag } from '../models/tag';
 import { TagMap } from '../models/tag-map';
 import { Bookmark } from '../models/bookmark';
 import { UserMark } from '../models/user-mark';
-
+import { Location } from '../models/location';
 export class DataAccessLayer {
 
     async readDatabase(data: Uint8Array): Promise<Database> {

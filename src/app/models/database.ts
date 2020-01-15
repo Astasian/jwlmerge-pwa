@@ -5,6 +5,7 @@ import { TagMap } from './tag-map';
 import { BlockRange } from './block-range';
 import { Bookmark } from './bookmark';
 import { UserMark } from './user-mark';
+import { Location } from './location';
 
 export class Database {
     LastModified: LastModified;

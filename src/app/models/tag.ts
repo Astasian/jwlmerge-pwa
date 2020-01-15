@@ -1,5 +1,5 @@
 export interface Tag {
-    tagId: number;
-    type: number;
-    name: string;
+    TagId: number;
+    Type: number;
+    Name: string;
 }

@@ -1,8 +1,8 @@
 export interface BlockRange {
-    blockRangeId: number;
-    blockType: number;
-    identifier: number;
-    startToken: number | null;
-    endToken: number | null;
-    userMarkId: number;
+    BlockRangeId: number;
+    BlockType: number;
+    Identifier: number;
+    StartToken: number | null;
+    EndToken: number | null;
+    UserMarkId: number;
 }

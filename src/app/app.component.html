@@ -1,7 +1,11 @@
 
-<input hidden type="file" #uploader (change)="uploadFile($event)"  />
+<input hidden type="file" #uploader (change)="uploadFile($event)" multiple/>
 <button (click)="uploader.click()">
-  Upload
+  Add file
+ </button>
+
+ <button (click)="merge()">
+  Merge
  </button>
 
  <textarea [(ngModel)]="dings" class="ta"></textarea>

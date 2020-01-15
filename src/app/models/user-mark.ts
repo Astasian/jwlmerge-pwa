@@ -1,8 +1,8 @@
 export interface UserMark {
-    userMarkId: number;
-    colorIndex: number;
-    locationId: number;
-    styleIndex: number;
-    userMarkGuid: string;
-    version: number;
+    UserMarkId: number;
+    ColorIndex: number;
+    LocationId: number;
+    StyleIndex: number;
+    UserMarkGuid: string;
+    Version: number;
 }

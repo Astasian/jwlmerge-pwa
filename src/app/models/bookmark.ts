@@ -1,10 +1,10 @@
 export interface Bookmark {
-    bookmarkId: number;
-    locationId: number;
-    publicationLocationId: number;
-    slot: number;
-    title: string;
-    snippet: string;
-    blockType: number;
-    blockIdentifier: number | null;
+    BookmarkId: number;
+    LocationId: number;
+    PublicationLocationId: number;
+    Slot: number;
+    Title: string;
+    Snippet: string;
+    BlockType: number;
+    BlockIdentifier: number | null;
 }

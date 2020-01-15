@@ -1,5 +1,5 @@
 export interface BibleBookChapterAndVerse {
-    bookNumber: number;
-    chapterNumber: number;
-    verseNumber: number;
+    BookNumber: number;
+    ChapterNumber: number;
+    VerseNumber: number;
 }

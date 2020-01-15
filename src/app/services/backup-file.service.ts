@@ -4,6 +4,7 @@ import { BackupFile } from '../models/backup-file';
 import { Manifest } from '../models/manifest';
 import { Database } from '../models/database';
 import { DataAccessLayer } from '../helpers/data-access-layer';
+import { Cleaner } from '../helpers/cleaner';
 
 @Injectable({
   providedIn: 'root'
@@ -32,13 +33,30 @@ export class BackupFileService {
     return await dal.readDatabase(dbFile);
   }
 
-  merge(files: BackupFile[]) {
+  merge(files: BackupFile[]): BackupFile {
     const fileNumber = 1;
     for (const file of files) {
       this.clean(file);
     }
+    
+    // just pick the first manifest as the basis for the 
+    // manifest in the final merged file...
+    //var newManifest = this.updateManifest(files[0].Manifest);
+    //var mergedDatabase = this.mergeDatabases(files);
+    return null //new BackupFile(newManifest, mergedDatabase);
+  }
+
+  updateManifest(Manifest: Manifest) {
+    throw new Error("Method not implemented.");
   }
 
   clean(file: BackupFile) {
+    console.log("Cleaning backup file " + file.Manifest.name);
+
+    const cleaner = new Cleaner(file.Database);
+    const rowsRemoved = cleaner.clean();
+    if (rowsRemoved > 0) {
+      console.log("Removed " + rowsRemoved + " inaccessible rows");
+    }
   }
 }
