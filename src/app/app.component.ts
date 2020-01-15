@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import * as JSZip from 'jszip';
+import { BackupFileService } from './services/backup-file.service';
+
 
 @Component({
   selector: 'app-root',
@@ -8,22 +9,16 @@ import * as JSZip from 'jszip';
 })
 export class AppComponent {
 
+  constructor(private backupFileService: BackupFileService) {
+
+  }
+
   async uploadFile($event: any) {
     const files = $event.target.files as FileList;
     for (let i = 0; i < files.length; i++) {
       const e = files[i];
-      this.handleFile(e);
+      const a = await this.backupFileService.load(e);
+      console.log(a);
     }
   }
-
-
-  async handleFile(file: File) {
-    const zip = await JSZip.loadAsync(file);
-    try {
-      zip.forEach((relativePath, zipEntry) => console.log(relativePath, zipEntry));
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
 }
