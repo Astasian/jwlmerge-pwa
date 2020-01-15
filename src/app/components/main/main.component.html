@@ -1,0 +1,22 @@
+<div class="wrapper row">
+    <div class="row">
+        <input hidden type="file" #uploader (change)="uploadFile($event)" multiple />
+        <button mat-raised-button color="primary" (click)="uploader.click()">Upload file</button>
+        <button mat-raised-button color="accent" (click)="merge()">Merge</button>
+    </div>
+
+    <div class="row">
+        <mat-card *ngFor="let back of files">
+            <mat-card-header>
+                {{back.Manifest.name}}
+            </mat-card-header>
+            <mat-card-content>
+                {{back.Manifest.creationDate}}
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="row">
+        <textarea [(ngModel)]="dings" class="ta"></textarea>
+    </div>
+</div>

@@ -1,13 +1,8 @@
-
-<input hidden type="file" #uploader (change)="uploadFile($event)" multiple/>
-<button (click)="uploader.click()">
-  Add file
- </button>
-
- <button (click)="merge()">
-  Merge
- </button>
-
- <textarea [(ngModel)]="dings" class="ta"></textarea>
-
-<router-outlet></router-outlet>
+<div class="main-app">
+  <mat-toolbar color="primary">
+    <span>JWLMerger <i>Web</i></span>
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+</div>
