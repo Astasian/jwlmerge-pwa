@@ -22,5 +22,5 @@ jobs:
     - name: GitHub Branch Deploy
       uses: zekth/gh-deploy-action@1.0.0
       with:
-        build_dir: './dist/jwlmerge-pwa'
+        dir: './dist/jwlmerge-pwa'
         gh_token: ${{ secrets.GH_TOKEN }}
