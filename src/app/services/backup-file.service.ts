@@ -5,13 +5,21 @@ import { Manifest } from '../models/manifest';
 import { Database } from '../models/database';
 import { Cleaner } from '../helpers/cleaner';
 import { DataAccessService } from './data-access.service';
+import { LogService } from './log.service';
+import { format } from 'date-fns';
+import { MergeService } from './merge.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackupFileService {
 
-  constructor(private dataAccessService: DataAccessService) { }
+  private ManifestVersionSupported = 1;
+  private DatabaseVersionSupported = 5;
+  private ManifestEntryName = "manifest.json";
+  private DatabaseEntryName = "userData.db";
+
+  constructor(private dataAccessService: DataAccessService, private logService: LogService, private mergeService: MergeService) { }
 
   async load(file: File): Promise<BackupFile> {
     const zip = await JSZip.loadAsync(file);
@@ -33,29 +41,50 @@ export class BackupFileService {
   }
 
   merge(files: BackupFile[]): BackupFile {
-    const fileNumber = 1;
+    let fileNumber = 1;
+    this.logService.progress("Merging " + files.length + " backup files");
     for (const file of files) {
+
+      this.logService.log("Merging backup file " + fileNumber + " = " + file.Manifest.name);
+      this.logService.log("===================");
       this.clean(file);
+      fileNumber++;
     }
-    
     // just pick the first manifest as the basis for the 
     // manifest in the final merged file...
-    //var newManifest = this.updateManifest(files[0].Manifest);
-    //var mergedDatabase = this.mergeDatabases(files);
-    return null //new BackupFile(newManifest, mergedDatabase);
+    const newManifest = this.updateManifest(files[0].Manifest);
+
+    const mergedDatabase = this.mergeDatabases(files);
+    return new BackupFile(newManifest, mergedDatabase);
   }
 
-  updateManifest(Manifest: Manifest) {
-    throw new Error("Method not implemented.");
+  mergeDatabases(jwlibraryFiles: BackupFile[]): Database {
+    this.logService.progress("Merging databases");
+    return this.mergeService.Merge(jwlibraryFiles.map(x => x.Database));
+  }
+
+  updateManifest(manifestToBaseOn: Manifest): Manifest {
+    this.logService.log("Updating manifest");
+
+    // quick copy
+    const result: Manifest = JSON.parse(JSON.stringify(manifestToBaseOn));
+    const simpleDateString = format(Date.now(), 'yyyy-mm-dd');
+
+    result.name = "merged_"+ simpleDateString;
+    result.creationDate = simpleDateString;
+    result.userDataBackup.deviceName = "JWLMergeWeb";
+    result.userDataBackup.databaseName = this.DatabaseEntryName;
+    this.logService.log("Updated manifest");
+    return result;
   }
 
   clean(file: BackupFile) {
-    console.log("Cleaning backup file " + file.Manifest.name);
+    this.logService.log("Cleaning backup file " + file.Manifest.name);
 
     const cleaner = new Cleaner(file.Database);
     const rowsRemoved = cleaner.clean();
     if (rowsRemoved > 0) {
-      console.log("Removed " + rowsRemoved + " inaccessible rows");
+      this.logService.log("Removed " + rowsRemoved + " inaccessible rows");
     }
   }
 }

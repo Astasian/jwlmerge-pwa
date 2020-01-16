@@ -1,3 +1,3 @@
-export interface LastModified {
-    LastModified: string;
+export class LastModified {
+    LastModified: string = null;
 }
