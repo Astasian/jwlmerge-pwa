@@ -2,7 +2,7 @@
     <div class="row">
         <input hidden type="file" #uploader (change)="uploadFile($event)" multiple />
         <button mat-raised-button color="primary" (click)="uploader.click()">Upload file</button>
-        <button mat-raised-button color="accent" (click)="merge()">Merge</button>
+        <button mat-raised-button color="accent" (click)="merge()" *ngIf="canMerge()">Merge</button>
     </div>
 
     <div class="row">

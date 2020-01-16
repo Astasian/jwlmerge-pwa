@@ -3,15 +3,15 @@ import * as JSZip from 'jszip';
 import { BackupFile } from '../models/backup-file';
 import { Manifest } from '../models/manifest';
 import { Database } from '../models/database';
-import { DataAccessLayer } from '../helpers/data-access-layer';
 import { Cleaner } from '../helpers/cleaner';
+import { DataAccessService } from './data-access.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackupFileService {
 
-  constructor() { }
+  constructor(private dataAccessService: DataAccessService) { }
 
   async load(file: File): Promise<BackupFile> {
     const zip = await JSZip.loadAsync(file);
@@ -29,8 +29,7 @@ export class BackupFileService {
 
   async readDatabase(zip: JSZip, path: string): Promise<Database> {
     const dbFile = await await zip.file(path).async('uint8array');
-    const dal = new DataAccessLayer();
-    return await dal.readDatabase(dbFile);
+    return await this.dataAccessService.readDatabase(dbFile);
   }
 
   merge(files: BackupFile[]): BackupFile {

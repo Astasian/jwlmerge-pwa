@@ -21,5 +21,8 @@ router-outlet + * {
 
 .row {
     flex: 1;
-    flex-direction: column; 
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
 }
