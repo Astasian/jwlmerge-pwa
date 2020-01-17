@@ -48,7 +48,7 @@ export class Merger {
     merge(source: Database, destination: Database) {
         this.clearTranslators();
 
-        source.FixupAnomalies();
+        source.fixupAnomalies();
 
         MergeUserMarks(source, destination);
         MergeNotes(source, destination);
